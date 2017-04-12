@@ -46,6 +46,13 @@ pprint.pprint(metabase.get("/card/"))
 - `METABASE_AUTH_EMAIL`
 - `METABASE_AUTH_PASSWORD`
 
+## Methods
+
+- `get(<URL>, params=data)`
+- `post(<URL>, json=data)`
+- `head(<URL>, ...)`
+- `delete(<URL>, ...)`
+
 ## Notice
 
 This library wraps [requests](http://docs.python-requests.org/en/master/)
