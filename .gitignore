@@ -27,3 +27,4 @@ bin/
 include/
 lib/
 pip-selfcheck.json
+test.py
