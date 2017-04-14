@@ -1,6 +1,6 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 
 setup(
         name="metabase",
@@ -10,4 +10,5 @@ setup(
         license="MIT License",
         author="flrngel",
         author_email="flrngel@gmail.com",
-        install_requires=["requests==2.13.0"] )
+        install_requires=["requests==2.13.0"],
+        packages=find_packages())
