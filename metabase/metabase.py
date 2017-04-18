@@ -13,12 +13,12 @@ class Metabase():
         self.session_start = time.time()
 
         # get environment
-        if self.email == None and os.getenv("METABASE_AUTH_EMAIL") != None:
-            self.email = os.getenv("METABASE_AUTH_EMAIL")
-        if self.password == None and os.getenv("METABASE_AUTH_PASSWORD") != None:
-            self.password = os.getenv("METABASE_AUTH_PASSWORD")
-        if self.endpoint != "http://localhost:3000" and os.getenv("METABASE_ENDPOINT") != None:
-            self.endpoint = os.getenv("METABASE_ENDPOINT")
+        if self.email == None and os.environ['METABASE_AUTH_EMAIL'] != None:
+            self.email = os.environ['METABASE_AUTH_EMAIL']
+        if self.password == None and os.environ['METABASE_AUTH_PASSWORD'] != None:
+            self.password = os.environ['METABASE_AUTH_PASSWORD']
+        if self.endpoint != "http://localhost:3000" and os.environ['METABASE_ENDPOINT'] != None:
+            self.endpoint = os.environ['METABASE_ENDPOINT']
 
         if self.session == None:
             self.auth()
