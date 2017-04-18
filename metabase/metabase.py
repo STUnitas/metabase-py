@@ -17,7 +17,7 @@ class Metabase():
             self.email = os.getenv("METABASE_AUTH_EMAIL")
         if self.password == None and os.getenv("METABASE_AUTH_PASSWORD") != None:
             self.password = os.getenv("METABASE_AUTH_PASSWORD")
-        if self.endpoint == "http://localhost:3000" and os.getenv("METABASE_ENDPOINT") != None:
+        if self.endpoint == "http://localhost:3000/api" and os.getenv("METABASE_ENDPOINT") != None:
             self.endpoint = os.getenv("METABASE_ENDPOINT")
 
         if self.session == None:
