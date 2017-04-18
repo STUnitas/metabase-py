@@ -20,7 +20,7 @@ class Metabase():
         if self.endpoint == "http://localhost:3000" and os.getenv("METABASE_ENDPOINT") != None:
             self.endpoint = os.getenv("METABASE_ENDPOINT")
 
-        self.endpoint = endpoint + "/api"
+        self.endpoint = self.endpoint + "/api"
 
         if self.session == None:
             self.auth()
