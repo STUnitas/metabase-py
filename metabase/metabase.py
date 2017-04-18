@@ -3,14 +3,11 @@ import time
 import requests
 
 class Metabase():
-    def __init__(self, *args, endpoint='http://localhost:3000', email=None, password=None, reauth_duration=7200, **kwargs):
+    def __init__(self, *args, endpoint='http://localhost:3000', email=None, password=None, session=None, **kwargs):
         self.endpoint = endpoint
         self.email = email
         self.password = password
-        self.reauth_duration = reauth_duration
-
-        self.session = None
-        self.session_start = time.time()
+        self.session = session
 
         # get environment
         if self.email == None and os.getenv("METABASE_AUTH_EMAIL") != None:
@@ -19,18 +16,19 @@ class Metabase():
             self.password = os.getenv("METABASE_AUTH_PASSWORD")
         if self.endpoint == "http://localhost:3000" and os.getenv("METABASE_ENDPOINT") != None:
             self.endpoint = os.getenv("METABASE_ENDPOINT")
+        if self.session == None and os.getenv("METABASE_SESSION") != None:
+            self.session = os.getenv("METABASE_SESSION")
 
         self.endpoint = self.endpoint + "/api"
 
         if self.session == None:
             self.auth()
 
-    def check_session(self):
-        now = int(time.time())
-        if now - self.session_start > self.reauth_duration:
+    def get_session_header(self, *args, **kwargs):
+        res, _ = self.get("/user/current", check_session=False)
+        if res == 401:
             self.auth()
-        return {
-                "X-Metabase-Session": self.session }
+        return { "X-Metabase-Session": self.session }
 
     def fetch_header(self, r):
         if r.status_code == 200:
@@ -44,27 +42,31 @@ class Metabase():
         else:
             return False, None
 
-    def get(self, *args, **kwargs):
-        headers = self.check_session()
+    def get(self, *args, headers={}, **kwargs):
+        if kwargs.pop('check_session', True) != False:
+            headers = self.get_session_header(**kwargs)
         r = requests.get(self.endpoint + args[0], headers=headers, **kwargs)
         return self.fetch_body(r)
 
-    def post(self, *args, **kwargs):
-        headers = self.check_session()
+    def post(self, *args, headers={}, **kwargs):
+        if kwargs.pop('check_session', True) != False:
+            headers = self.get_session_header(**kwargs)
         r = requests.post(self.endpoint + args[0], headers=headers, **kwargs)
         return self.fetch_body(r)
 
-    def put(self, *args, **kwargs):
-        headers = self.check_session()
+    def put(self, *args, headers={}, **kwargs):
+        if kwargs.pop('check_session', True) != False:
+            headers = self.get_session_header(**kwargs)
         r = requests.put(self.endpoint + args[0], headers=headers, **kwargs)
         return self.fetch_header(r)
 
-    def delete(self, *args, **kwargs):
-        headers = self.check_session()
+    def delete(self, *args, headers={}, **kwargs):
+        if kwargs.pop('check_session', True) != False:
+            headers = self.get_session_header(**kwargs)
         r = requests.put(self.endpoint + args[0], headers=headers, **kwargs)
         return self.fetch_header(r)
 
-    def auth(self):
+    def auth(self, **kwargs):
         payload = {
                 'email': self.email,
                 'password': self.password}
@@ -73,4 +75,3 @@ class Metabase():
 
         if res == True:
             self.session = data['id']
-            self.session_start = int(time.time())
