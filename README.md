@@ -53,6 +53,11 @@ pprint.pprint(metabase.get("/card/"))
 - `head(<URL>, ...)`
 - `delete(<URL>, ...)`
 
+## Features
+
+- can set `session key` as manually
+- `auth_callback` authentication callback (For custom storage)
+
 ## Notice
 
 This library wraps [requests](http://docs.python-requests.org/en/master/)
