@@ -4,7 +4,7 @@ import requests
 
 class Metabase():
     def __init__(self, *args, endpoint='http://localhost:3000', email=None, password=None, reauth_duration=7200, **kwargs):
-        self.endpoint = endpoint + "/api"
+        self.endpoint = endpoint
         self.email = email
         self.password = password
         self.reauth_duration = reauth_duration
@@ -17,8 +17,10 @@ class Metabase():
             self.email = os.getenv("METABASE_AUTH_EMAIL")
         if self.password == None and os.getenv("METABASE_AUTH_PASSWORD") != None:
             self.password = os.getenv("METABASE_AUTH_PASSWORD")
-        if self.endpoint == "http://localhost:3000/api" and os.getenv("METABASE_ENDPOINT") != None:
+        if self.endpoint == "http://localhost:3000" and os.getenv("METABASE_ENDPOINT") != None:
             self.endpoint = os.getenv("METABASE_ENDPOINT")
+
+        self.endpoint = endpoint + "/api"
 
         if self.session == None:
             self.auth()
