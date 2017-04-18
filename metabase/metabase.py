@@ -8,6 +8,7 @@ class Metabase():
         self.email = email
         self.password = password
         self.session = session
+        self.auth_callback = kwargs.pop('auth_callback', None)
 
         # get environment
         if self.email == None and os.getenv("METABASE_AUTH_EMAIL") != None:
@@ -76,6 +77,5 @@ class Metabase():
         if res == True:
             self.session = data['id']
 
-        auth_callback = kwargs.pop('auth_callback', None)
-        if callable(auth_callback):
-            auth_callback(self)
+        if hasattr(self, 'auth_callback') and callable(self.auth_callback):
+            self.auth_callback(self)
