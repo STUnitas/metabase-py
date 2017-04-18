@@ -75,3 +75,7 @@ class Metabase():
 
         if res == True:
             self.session = data['id']
+
+        auth_callback = kwargs.pop('auth_callback', None)
+        if callable(auth_callback):
+            auth_callback(self)
