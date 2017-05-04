@@ -25,11 +25,15 @@ class Metabase():
         if self.session == None:
             self.auth()
 
-    def get_session_header(self, *args, **kwargs):
-        res, _ = self.get("/user/current", check_session=False)
-        if res == 401:
-            self.auth()
+    def session_header(self):
         return { "X-Metabase-Session": self.session }
+
+    def get_session_header(self, *args, **kwargs):
+        res = requests.get(self.endpoint + "/user/current", headers=self.session_header())
+        if res.status_code == 401:
+            self.auth()
+        print(self.session_header())
+        return self.session_header()
 
     def fetch_header(self, r):
         if r.status_code == 200:
@@ -72,10 +76,15 @@ class Metabase():
                 'email': self.email,
                 'password': self.password}
 
-        res, data = self.post("/session", json=payload)
+        res = requests.post(self.endpoint + "/session", json=payload)
 
-        if res == True:
+        if res.status_code == 200:
+            data = res.json()
+            print('data')
+            print(data)
             self.session = data['id']
+        else:
+            print(res.status_code)
 
         if hasattr(self, 'auth_callback') and callable(self.auth_callback):
             self.auth_callback(self)
