@@ -11,6 +11,7 @@ pip install metabase
 ## How to use
 
 ```python
+import pprint
 from metabase import Metabase
 
 metabase = Metabase(email="<email>", password="<password>")
