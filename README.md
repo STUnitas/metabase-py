@@ -62,3 +62,7 @@ pprint.pprint(metabase.get("/card/"))
 ## Notice
 
 This library wraps [requests](http://docs.python-requests.org/en/master/)
+
+## Contributors
+
+see [here](https://github.com/STUnitas/metabase-py/graphs/contributors)
