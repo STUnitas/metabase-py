@@ -65,7 +65,7 @@ class Metabase(object):
 
     def auth(self, **kwargs):
         payload = {
-            'email': self.email,
+            'username': self.email,
             'password': self.password
         }
 
