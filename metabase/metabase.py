@@ -19,7 +19,7 @@ class Metabase(object):
     def session_header(self):
         return {'X-Metabase-Session': self.session}
 
-    def get_session_header(self, *args, **kwargs):
+    def get_session_headers(self, *args, **kwargs):
         res = requests.get(self.endpoint + '/user/current',
                            headers=self.session_header())
         if res.status_code == 401:
