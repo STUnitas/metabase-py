@@ -5,7 +5,7 @@ import requests
 
 class Metabase(object):
 
-    def __init__(self, *args, endpoint='http://localhost:3000', email=None,
+    def __init__(self, *args, endpoint=None, email=None,
                  password=None, session=None, **kwargs):
         self.endpoint = endpoint or os.getenv('METABASE_ENDPOINT') + '/api'
         self.email = email or os.getenv('METABASE_AUTH_EMAIL')
