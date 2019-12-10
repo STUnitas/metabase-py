@@ -10,5 +10,5 @@ setup(
         license="MIT License",
         author="flrngel",
         author_email="flrngel@gmail.com",
-        install_requires=["requests==2.18.1"],
+        install_requires=["requests"],
         packages=find_packages())
