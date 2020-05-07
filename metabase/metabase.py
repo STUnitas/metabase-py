@@ -60,7 +60,7 @@ class Metabase(object):
 
     def delete(self, *args, headers=None, **kwargs):
         headers = self.get_session_headers(headers, kwargs)
-        r = requests.put(self.endpoint + args[0], headers=headers, **kwargs)
+        r = requests.delete(self.endpoint + args[0], headers=headers, **kwargs)
         return self.fetch_header(r)
 
     def auth(self, **kwargs):
