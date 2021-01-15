@@ -7,7 +7,7 @@ class Metabase(object):
 
     def __init__(self, *args, endpoint=None, email=None,
                  password=None, session=None, **kwargs):
-        self.endpoint = endpoint or os.getenv('METABASE_ENDPOINT') + '/api'
+        self.endpoint = (endpoint or os.getenv('METABASE_ENDPOINT')) + '/api'
         self.email = email or os.getenv('METABASE_AUTH_EMAIL')
         self.password = password or os.getenv('METABASE_AUTH_PASSWORD')
         self.session = session or os.getenv('METABASE_SESSION')
