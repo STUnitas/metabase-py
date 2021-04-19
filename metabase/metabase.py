@@ -27,7 +27,7 @@ class Metabase(object):
         return self.session_header()
 
     def fetch_header(self, r):
-        if r.status_code == 200 or r.status_code == 202:
+        if r.status_code in [200, 202, 204]:
             return True
         else:
             return False
@@ -35,6 +35,8 @@ class Metabase(object):
     def fetch_body(self, r):
         if r.status_code == 200 or r.status_code == 202:
             return True, r.json()
+        elif r.status_code == 204:
+            return True, None
         else:
             return False, None
 
